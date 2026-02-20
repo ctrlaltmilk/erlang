@@ -5,7 +5,7 @@
     select/2, trap_exits/1, map_selector/2, merge_selector/2, flush_messages/0,
     priv_directory/1, connect_node/1, register_process/2, unregister_process/1,
     process_named/1, identity/1, 'receive'/1, 'receive'/2, new_name/1,
-    cast_down_message/1, cast_exit_reason/1
+    cast_down_message/1, cast_exit_reason/1, get_application/0
 ]).
 
 -spec atom_from_string(binary()) -> {ok, atom()} | {error, nil}.
@@ -118,6 +118,12 @@ trap_exits(ShouldTrap) ->
 flush_messages() ->
     receive _Message -> flush_messages()
     after 0 -> nil
+    end.
+
+get_application() ->
+    case application:get_application() of
+        {ok, Application} -> {ok, erlang:atom_to_binary(Application, utf8)};
+        _ -> {error, nil}
     end.
 
 priv_directory(Name) ->

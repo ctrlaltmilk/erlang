@@ -20,6 +20,19 @@ pub type StartType {
   Failover(previous: Node)
 }
 
+/// Returns the  name of the current application, or an error if not run from
+/// inside an application.
+///
+/// # Example
+///
+/// ```gleam
+/// application.get_application()
+/// // -> Ok("my_app")
+/// ```
+///
+@external(erlang, "gleam_erlang_ffi", "get_application")
+pub fn get_application() -> Result(String, Nil)
+
 /// Returns the path of an application's `priv` directory, where extra non-Gleam
 /// or Erlang files are typically kept. Each Gleam package is an Erlang
 /// application.
