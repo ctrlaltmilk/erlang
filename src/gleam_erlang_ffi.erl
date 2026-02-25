@@ -121,7 +121,8 @@ flush_messages() ->
     end.
 
 get_application() ->
-    case application:get_application() of
+    Module = module_info(module),
+    case application:get_application(Module) of
         {ok, Application} -> {ok, erlang:atom_to_binary(Application, utf8)};
         _ -> {error, nil}
     end.
